@@ -1,0 +1,25 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.sqlite3
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+tasks/
