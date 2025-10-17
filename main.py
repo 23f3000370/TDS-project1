@@ -159,3 +159,7 @@ async def api_endpoint(request: TaskRequest):
         "commit_sha": commit_sha,
         "timestamp": timestamp
     }
+
+@app.get("/")
+def root():
+    return {"message": "LLM Code Deployment API is running!"}
