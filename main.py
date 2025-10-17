@@ -102,18 +102,26 @@ def push_to_github(task_folder: str, repo_name: str):
     try:
         if not os.path.exists(os.path.join(task_folder, ".git")):
             subprocess.run(["git", "init"], cwd=task_folder, check=True)
+
+            # ✅ Set Git identity for Render
+            subprocess.run(["git", "config", "user.email", "23f3000370@ds.study.iitm.ac.in"], cwd=task_folder, check=True)
+            subprocess.run(["git", "config", "user.name", "23f3000370"], cwd=task_folder, check=True)
+
             subprocess.run(["git", "add", "."], cwd=task_folder, check=True)
             subprocess.run(["git", "commit", "-m", "Initial commit"], cwd=task_folder, check=True)
             subprocess.run(["git", "branch", "-M", "main"], cwd=task_folder, check=True)
+
         subprocess.run(["git", "remote", "remove", "origin"], cwd=task_folder, check=False)
         subprocess.run(["git", "remote", "add", "origin", repo_url], cwd=task_folder, check=True)
         subprocess.run(["git", "push", "-u", "origin", "main", "--force"], cwd=task_folder, check=True)
 
         commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=task_folder).decode().strip()
         return repo_url, pages_url, commit_sha
+
     except subprocess.CalledProcessError as e:
         logging.error("GitHub push failed: %s", e)
         raise HTTPException(status_code=500, detail="GitHub push failed")
+
 
 
 @app.post("/api-endpoint")
